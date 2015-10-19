@@ -1,4 +1,4 @@
-package org.teavm.contrib;
+package org.teavm.contrib.jso.browser;
 
 import org.teavm.jso.JSBody;
 import org.teavm.jso.JSObject;
@@ -16,7 +16,7 @@ public abstract class Console implements JSObject {
 	@JSBody(params = {}, script = "return console;")
 	public static native Console current();
 
-	@JSBody(params = { "expression" }, script = "return this.assert(expression, msg)")
+	@JSBody(params = { "expression", "msg" }, script = "return this.assert(expression, msg)")
 	public abstract void assertTrue(boolean expression, String msg);
 
 	public abstract void clear();
@@ -75,7 +75,8 @@ public abstract class Console implements JSObject {
 
 	public abstract void timeStamp(String label);
 
-	public abstract void trace(JSObject obj);
+	// currently not working in Firebug
+	public abstract void trace();
 
 	@JSBody(params = { "objs" }, script = "return this.warn.apply(null, objs)")
 	public abstract void warn(JSObject... objs);
