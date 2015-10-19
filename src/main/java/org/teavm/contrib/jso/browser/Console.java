@@ -25,40 +25,40 @@ public abstract class Console implements JSObject {
 
 	public abstract void count(String label);
 
-	@JSBody(params = { "objs" }, script = "return this.debug.apply(null, objs)")
+	@JSBody(params = { "objs" }, script = "return this.debug.apply(this, objs)")
 	public abstract void debug(JSObject... objs);
 
 	@JSBody(params = { "msg",
-			"objs" }, script = "var args=[msg]; args.push.apply(args, objs);return this.debug.apply(null, args)")
+			"objs" }, script = "var args=[msg]; args.push.apply(args, objs);return this.debug.apply(this, args)")
 	public abstract void debug(String msg, JSObject... objs);
 
 	public abstract void dir(JSObject obj);
 
 	public abstract void dirxml(JSObject obj);
 
-	@JSBody(params = { "objs" }, script = "return this.error.apply(null, objs)")
+	@JSBody(params = { "objs" }, script = "return this.error.apply(this, objs)")
 	public abstract void error(JSObject... objs);
 
-	@JSBody(params = { "objs" }, script = "return this.group.apply(null, objs)")
+	@JSBody(params = { "objs" }, script = "return this.group.apply(this, objs)")
 	public abstract void group(JSObject... objs);
 
-	@JSBody(params = { "objs" }, script = "return this.groupCollapsed.apply(null, objs)")
+	@JSBody(params = { "objs" }, script = "return this.groupCollapsed.apply(this, objs)")
 	public abstract void groupCollapsed(JSObject... objs);
 
 	public abstract void groupEnd();
 
-	@JSBody(params = { "objs" }, script = "return this.info.apply(null, objs)")
+	@JSBody(params = { "objs" }, script = "return this.info.apply(this, objs)")
 	public abstract void info(JSObject... objs);
 
 	@JSBody(params = { "msg",
-			"objs" }, script = "var args=[msg]; args.push.apply(args, objs);return this.info.apply(null, args)")
+			"objs" }, script = "var args=[msg]; args.push.apply(args, objs);return this.info.apply(this, args)")
 	public abstract void info(String msg, JSObject... objs);
 
 	@JSBody(params = { "msg",
-			"objs" }, script = "var args=[msg]; args.push.apply(args, objs);return this.log.apply(null, args)")
+			"objs" }, script = "var args=[msg]; args.push.apply(args, objs);return this.log.apply(this, args)")
 	public abstract void log(String msg, JSObject... objs);
 
-	@JSBody(params = { "objs" }, script = "return this.log.apply(null, objs)")
+	@JSBody(params = { "objs" }, script = "return this.log.apply(this, objs)")
 	public abstract void log(JSObject... objs);
 
 	public abstract void profile();
@@ -78,11 +78,11 @@ public abstract class Console implements JSObject {
 	// currently not working in Firebug
 	public abstract void trace();
 
-	@JSBody(params = { "objs" }, script = "return this.warn.apply(null, objs)")
+	@JSBody(params = { "objs" }, script = "return this.warn.apply(this, objs)")
 	public abstract void warn(JSObject... objs);
 
 	@JSBody(params = { "msg",
-			"objs" }, script = "var args=[msg]; args.push.apply(args, objs);return this.warn.apply(null, args)")
+			"objs" }, script = "var args=[msg]; args.push.apply(args, objs);return this.warn.apply(this, args)")
 	public abstract void warn(String msg, JSObject... objs);
 
 }
