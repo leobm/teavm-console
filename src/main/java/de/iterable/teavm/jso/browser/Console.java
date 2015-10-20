@@ -1,12 +1,10 @@
-package org.teavm.contrib.jso.browser;
+package de.iterable.teavm.jso.browser;
 
 import org.teavm.jso.JSBody;
 import org.teavm.jso.JSObject;
 
 /**
- * The console object provides access to the browser's debugging console. The
- * specifics of how it works vary from browser to browser, but there is a
- * factual set of features that are typically provided.
+ * The console object provides access co
  */
 public abstract class Console implements JSObject {
 
@@ -16,6 +14,7 @@ public abstract class Console implements JSObject {
 	@JSBody(params = {}, script = "return console;")
 	public static native Console current();
 
+	// currently not working in Firebug 2.0.12  see https://github.com/firebug/firebug/issues/7948
 	@JSBody(params = { "expression", "msg" }, script = "return this.assert(expression, msg)")
 	public abstract void assertTrue(boolean expression, String msg);
 
@@ -75,7 +74,7 @@ public abstract class Console implements JSObject {
 
 	public abstract void timeStamp(String label);
 
-	// currently not working in Firebug
+	// currently not working in Firebug 2.0.12  see https://github.com/firebug/firebug/issues/7948
 	public abstract void trace();
 
 	@JSBody(params = { "objs" }, script = "return this.warn.apply(this, objs)")
