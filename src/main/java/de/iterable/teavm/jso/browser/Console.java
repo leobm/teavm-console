@@ -1,10 +1,27 @@
+/*
+ *  Copyright 2015 Felix Wittmann
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package de.iterable.teavm.jso.browser;
 
 import org.teavm.jso.JSBody;
 import org.teavm.jso.JSObject;
 
-/**
- * The console object provides access co
+/*
+ * The console object provides access to the browser's debugging console. The
+ * specifics of how it works vary from browser to browser, but there is a
+ * factual set of features that are typically provided.
  */
 public abstract class Console implements JSObject {
 
@@ -14,7 +31,6 @@ public abstract class Console implements JSObject {
 	@JSBody(params = {}, script = "return console;")
 	public static native Console current();
 
-	// currently not working in Firebug 2.0.12  see https://github.com/firebug/firebug/issues/7948
 	@JSBody(params = { "expression", "msg" }, script = "return this.assert(expression, msg)")
 	public abstract void assertTrue(boolean expression, String msg);
 
@@ -74,7 +90,6 @@ public abstract class Console implements JSObject {
 
 	public abstract void timeStamp(String label);
 
-	// currently not working in Firebug 2.0.12  see https://github.com/firebug/firebug/issues/7948
 	public abstract void trace();
 
 	@JSBody(params = { "objs" }, script = "return this.warn.apply(this, objs)")
