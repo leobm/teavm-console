@@ -23,80 +23,90 @@ import org.teavm.jso.JSObject;
  * specifics of how it works vary from browser to browser, but there is a
  * factual set of features that are typically provided.
  */
-public abstract class Console implements JSObject {
+public final class Console implements JSObject {
 
 	private Console() {
 	}
 
-	@JSBody(params = {}, script = "return console;")
-	public static native Console current();
+	@JSBody(params = {}, script = "return typeof console !== 'undefined'")
+	public static native boolean isAvailable();
 
-	@JSBody(params = { "expression", "msg" }, script = "return this.assert(expression, msg)")
-	public abstract void assertTrue(boolean expression, String msg);
+	@JSBody(params = { "expression", "msg" }, script = "return console.assert(expression, msg)")
+	public static native void assertTrue(boolean expression, String msg);
 
-	public abstract void clear();
+	@JSBody(params = {}, script = "return window.console.clear()")
+	public static native void clear();
 
-	public abstract void count();
+	@JSBody(params = {}, script = "return window.console.count()")
+	public static native void count();
 
-	public abstract void count(String label);
+	@JSBody(params = { "label" }, script = "return  window.console.count(label)")
+	public static native void count(String label);
 
-	@JSBody(params = { "objs" }, script = "return this.debug.apply(this, objs)")
-	public abstract void debug(JSObject... objs);
+	@JSBody(params = { "objs" }, script = "return console.debug.apply(this, objs)")
+	public static native void debug(JSObject... objs);
 
-	@JSBody(params = { "msg",
-			"objs" }, script = "var args=[msg]; args.push.apply(args, objs);return this.debug.apply(this, args)")
-	public abstract void debug(String msg, JSObject... objs);
+	@JSBody(params = { "msg", "objs" }, script = "return console.debug.apply(this,[msg].concat.apply([msg], objs))")
+	public static native void debug(String msg, JSObject... objs);
 
-	public abstract void dir(JSObject obj);
+	@JSBody(params = { "obj" }, script = "return console.dir.apply(this, obj)")
+	public static native void dir(JSObject obj);
 
-	public abstract void dirxml(JSObject obj);
+	@JSBody(params = { "obj" }, script = "return console.dirxml.apply(this, obj)")
+	public static native void dirxml(JSObject obj);
 
-	@JSBody(params = { "objs" }, script = "return this.error.apply(this, objs)")
-	public abstract void error(JSObject... objs);
+	@JSBody(params = { "objs" }, script = "return console.error.apply(this, objs)")
+	public static native void error(JSObject... objs);
 
-	@JSBody(params = { "objs" }, script = "return this.group.apply(this, objs)")
-	public abstract void group(JSObject... objs);
+	@JSBody(params = { "objs" }, script = "return console.group.apply(this, objs)")
+	public static native void group(JSObject... objs);
 
-	@JSBody(params = { "objs" }, script = "return this.groupCollapsed.apply(this, objs)")
-	public abstract void groupCollapsed(JSObject... objs);
+	@JSBody(params = { "objs" }, script = "return console.groupCollapsed.apply(this, objs)")
+	public static native void groupCollapsed(JSObject... objs);
 
-	public abstract void groupEnd();
+	@JSBody(params = {}, script = "return console.groupEnd()")
+	public static native void groupEnd();
 
-	@JSBody(params = { "objs" }, script = "return this.info.apply(this, objs)")
-	public abstract void info(JSObject... objs);
+	@JSBody(params = { "objs" }, script = "return console.info.apply(this, objs)")
+	public static native void info(JSObject... objs);
 
-	@JSBody(params = { "msg",
-			"objs" }, script = "var args=[msg]; args.push.apply(args, objs);return this.info.apply(this, args)")
-	public abstract void info(String msg, JSObject... objs);
+	@JSBody(params = { "msg", "objs" }, script = "return console.info.apply(this, [msg].concat.apply([msg], objs))")
+	public static native void info(String msg, JSObject... objs);
 
-	@JSBody(params = { "msg",
-			"objs" }, script = "var args=[msg]; args.push.apply(args, objs);return this.log.apply(this, args)")
-	public abstract void log(String msg, JSObject... objs);
+	@JSBody(params = { "msg", "objs" }, script = "return console.log.apply(this, [msg].concat.apply([msg], objs))")
+	public static native void log(String msg, JSObject... objs);
 
-	@JSBody(params = { "objs" }, script = "return this.log.apply(this, objs)")
-	public abstract void log(JSObject... objs);
+	@JSBody(params = { "objs" }, script = "return console.log.apply(this, objs)")
+	public static native void log(JSObject... objs);
 
-	public abstract void profile();
+	@JSBody(params = {}, script = "return console.profile()")
+	public static native void profile();
 
-	public abstract void profile(String label);
+	@JSBody(params = { "label" }, script = "return console.profile(label)")
+	public static native void profile(String label);
 
-	public abstract void profileEnd();
+	@JSBody(params = {}, script = "return console.profileEnd()")
+	public static native void profileEnd();
 
-	public abstract void time(String timerName);
+	@JSBody(params = { "timerName" }, script = "return console.time(timerName)")
+	public static native void time(String timerName);
 
-	public abstract void timeEnd();
+	@JSBody(params = {}, script = "return console.timeEnd()")
+	public static native void timeEnd();
 
-	public abstract void timeStamp();
+	@JSBody(params = {}, script = "return console.timeStamp()")
+	public static native void timeStamp();
 
-	public abstract void timeStamp(String label);
+	@JSBody(params = { "label" }, script = "return console.timeStamp(label)")
+	public static native void timeStamp(String label);
 
-	public abstract void trace();
+	@JSBody(params = {}, script = "return console.trace()")
+	public static native void trace();
 
-	@JSBody(params = { "objs" }, script = "return this.warn.apply(this, objs)")
-	public abstract void warn(JSObject... objs);
+	@JSBody(params = { "objs" }, script = "return console.warn.apply(this, objs)")
+	public static native void warn(JSObject... objs);
 
-	@JSBody(params = { "msg",
-			"objs" }, script = "var args=[msg]; args.push.apply(args, objs);return this.warn.apply(this, args)")
-	public abstract void warn(String msg, JSObject... objs);
+	@JSBody(params = { "msg", "objs" }, script = "return console.warn.apply(this, [msg].concat.apply([msg], objs))")
+	public static native void warn(String msg, JSObject... objs);
 
 }
