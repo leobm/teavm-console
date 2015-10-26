@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.iterable</groupId>
     <artifactId>teavm-console</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>teavm-console provides a statically typed java interface to the browser's debugging Console API for the teavm.</description>
@@ -20,7 +20,7 @@
         <url>https://github.com/leobm/teavm-console</url>
         <developerConnection>scm:git:git@github.com:leobm/teavm-console.git</developerConnection>
         <connection>scm:git:git@github.com:leobm/teavm-console.git</connection>
-      <tag>teavm-console-0.0.2</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <properties>
