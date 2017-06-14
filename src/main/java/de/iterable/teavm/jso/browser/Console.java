@@ -15,8 +15,11 @@
  */
 package de.iterable.teavm.jso.browser;
 
+import java.util.function.Consumer;
+
 import org.teavm.jso.JSBody;
 import org.teavm.jso.JSObject;
+import org.teavm.jso.core.JSArray;
 
 /*
  * The console object provides access to the browser's debugging console. The
@@ -25,88 +28,100 @@ import org.teavm.jso.JSObject;
  */
 public final class Console implements JSObject {
 
-	private Console() {
-	}
+    private Console() {
+    }
 
-	@JSBody(params = {}, script = "return typeof console !== 'undefined'")
-	public static native boolean isAvailable();
+    @JSBody(params = {}, script = "return typeof console !== 'undefined'")
+    public static native boolean isAvailable();
 
-	@JSBody(params = { "expression", "msg" }, script = "return console.assert(expression, msg)")
-	public static native void assertTrue(boolean expression, String msg);
+    @JSBody(params = { "expression", "msg" }, script = "return console.assert(expression, msg)")
+    public static native void assertTrue(boolean expression, String msg);
 
-	@JSBody(params = {}, script = "return window.console.clear()")
-	public static native void clear();
+    @JSBody(params = {}, script = "return window.console.clear()")
+    public static native void clear();
 
-	@JSBody(params = {}, script = "return window.console.count()")
-	public static native void count();
+    @JSBody(params = {}, script = "return window.console.count()")
+    public static native void count();
 
-	@JSBody(params = { "label" }, script = "return  window.console.count(label)")
-	public static native void count(String label);
+    @JSBody(params = { "label" }, script = "return  window.console.count(label)")
+    public static native void count(String label);
 
-	@JSBody(params = { "objs" }, script = "return console.debug.apply(this, objs)")
-	public static native void debug(JSObject... objs);
+    @JSBody(params = { "objs" }, script = "return console.debug.apply(this, objs)")
+    public static native void debug(JSObject... objs);
 
-	@JSBody(params = { "msg", "objs" }, script = "return console.debug.apply(this,[msg].concat.apply([msg], objs))")
-	public static native void debug(String msg, JSObject... objs);
+    @JSBody(params = { "msg", "objs" }, script = "return console.debug.apply(this,[msg].concat(objs))")
+    public static native void debug(String msg, JSObject... objs);
 
-	@JSBody(params = { "obj" }, script = "return console.dir.apply(this, obj)")
-	public static native void dir(JSObject obj);
+    @JSBody(params = { "obj" }, script = "return console.dir.apply(this, obj)")
+    public static native void dir(JSObject obj);
 
-	@JSBody(params = { "obj" }, script = "return console.dirxml.apply(this, obj)")
-	public static native void dirxml(JSObject obj);
+    @JSBody(params = { "obj" }, script = "return console.dirxml.apply(this, obj)")
+    public static native void dirxml(JSObject obj);
 
-	@JSBody(params = { "objs" }, script = "return console.error.apply(this, objs)")
-	public static native void error(JSObject... objs);
+    @JSBody(params = { "objs" }, script = "return console.error.apply(this, objs)")
+    public static native void error(JSObject... objs);
 
-	@JSBody(params = { "objs" }, script = "return console.group.apply(this, objs)")
-	public static native void group(JSObject... objs);
+    @JSBody(params = { "objs" }, script = "return console.group.apply(this, objs)")
+    public static native void group(JSObject... objs);
 
-	@JSBody(params = { "objs" }, script = "return console.groupCollapsed.apply(this, objs)")
-	public static native void groupCollapsed(JSObject... objs);
+    @JSBody(params = { "objs" }, script = "return console.groupCollapsed.apply(this, objs)")
+    public static native void groupCollapsed(JSObject... objs);
 
-	@JSBody(params = {}, script = "return console.groupEnd()")
-	public static native void groupEnd();
+    @JSBody(params = {}, script = "return console.groupEnd()")
+    public static native void groupEnd();
 
-	@JSBody(params = { "objs" }, script = "return console.info.apply(this, objs)")
-	public static native void info(JSObject... objs);
+    @JSBody(params = { "objs" }, script = "return console.info.apply(this, objs)")
+    public static native void info(JSObject... objs);
 
-	@JSBody(params = { "msg", "objs" }, script = "return console.info.apply(this, [msg].concat.apply([msg], objs))")
-	public static native void info(String msg, JSObject... objs);
+    @JSBody(params = { "msg", "objs" }, script = "return console.info.apply(this, [msg].concat(objs))")
+    public static native void info(String msg, JSObject... objs);
 
-	@JSBody(params = { "msg", "objs" }, script = "return console.log.apply(this, [msg].concat.apply([msg], objs))")
-	public static native void log(String msg, JSObject... objs);
+    @JSBody(params = { "msg", "objs" }, script = "return console.log.apply(this, [msg].concat(objs))")
+    public static native void log(String msg, JSObject... objs);
 
-	@JSBody(params = { "objs" }, script = "return console.log.apply(this, objs)")
-	public static native void log(JSObject... objs);
+    @JSBody(params = { "objs" }, script = "return console.log.apply(this, objs)")
+    public static native void log(JSArray<JSObject> objs);
 
-	@JSBody(params = {}, script = "return console.profile()")
-	public static native void profile();
+    public static void log(Consumer<ValuesBuilder> builder) {
+        final ValuesBuilder argsBuilder = new ValuesBuilder();
+        builder.accept(argsBuilder);
+        log(argsBuilder.build());
+    }
 
-	@JSBody(params = { "label" }, script = "return console.profile(label)")
-	public static native void profile(String label);
+    @JSBody(params = { "objs" }, script = "return console.log.apply(this, objs)")
+    public static native void log(JSObject... objs);
 
-	@JSBody(params = {}, script = "return console.profileEnd()")
-	public static native void profileEnd();
+    @JSBody(params = { "arr" }, script = "return console.log.apply(this, arr)")
+    public static native void log(String[] arr);
 
-	@JSBody(params = { "timerName" }, script = "return console.time(timerName)")
-	public static native void time(String timerName);
+    @JSBody(params = {}, script = "return console.profile()")
+    public static native void profile();
 
-	@JSBody(params = {}, script = "return console.timeEnd()")
-	public static native void timeEnd();
+    @JSBody(params = { "label" }, script = "return console.profile(label)")
+    public static native void profile(String label);
 
-	@JSBody(params = {}, script = "return console.timeStamp()")
-	public static native void timeStamp();
+    @JSBody(params = {}, script = "return console.profileEnd()")
+    public static native void profileEnd();
 
-	@JSBody(params = { "label" }, script = "return console.timeStamp(label)")
-	public static native void timeStamp(String label);
+    @JSBody(params = { "timerName" }, script = "return console.time(timerName)")
+    public static native void time(String timerName);
 
-	@JSBody(params = {}, script = "return console.trace()")
-	public static native void trace();
+    @JSBody(params = {}, script = "return console.timeEnd()")
+    public static native void timeEnd();
 
-	@JSBody(params = { "objs" }, script = "return console.warn.apply(this, objs)")
-	public static native void warn(JSObject... objs);
+    @JSBody(params = {}, script = "return console.timeStamp()")
+    public static native void timeStamp();
 
-	@JSBody(params = { "msg", "objs" }, script = "return console.warn.apply(this, [msg].concat.apply([msg], objs))")
-	public static native void warn(String msg, JSObject... objs);
+    @JSBody(params = { "label" }, script = "return console.timeStamp(label)")
+    public static native void timeStamp(String label);
+
+    @JSBody(params = {}, script = "return console.trace()")
+    public static native void trace();
+
+    @JSBody(params = { "objs" }, script = "return console.warn.apply(this, objs)")
+    public static native void warn(JSObject... objs);
+
+    @JSBody(params = { "msg", "objs" }, script = "return console.warn.apply(this, [msg].concat(objs))")
+    public static native void warn(String msg, JSObject... objs);
 
 }
